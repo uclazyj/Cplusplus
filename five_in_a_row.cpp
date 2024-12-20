@@ -47,6 +47,7 @@ public:
     bool play(int row, int col, Player player){
         char token = player.get_token();
         board_[row][col] = token;
+        history_.push_back({row, col});
         print_board();
         // win from horizontal
         {
@@ -147,13 +148,39 @@ public:
         return false;
     }
 
+    void undo(){
+        int length = history_.size();
+        if (length == 0){
+            return;
+        }
+        pair<int, int> coord = history_[length-1];
+        int row = coord.first;
+        int col = coord.second;
+        board_[row][col] = '.';
+        history_.pop_back();
+    }
+
     void start(){
         while (true) {
-            // Player 1 plays
             for (int i = 0; i < players_.size(); ++i){
-                cout << players_[i].get_name() << "'s turn (" << players_[i].get_token() << "):" << endl;
-                pair<int, int> coord = get_coord();
-                if (play(coord.first, coord.second, players_[i])){
+                int row;
+                int col;
+                while (true){
+                    cout << players_[i].get_name() << "'s turn (" << players_[i].get_token() << "):" << endl;
+                    pair<int, int> coord = get_coord();
+                    row = coord.first;
+                    col = coord.second;
+                    if (row == -1 && col == -1){
+                        undo();
+                        undo();
+                        print_board();
+                    }
+                    else{
+                        break;
+                    }
+                }
+                
+                if (play(row, col, players_[i])){
                     cout << "Congratulations " << players_[i].get_name() << ", you win!" << endl;
                     return;
                 }
@@ -168,6 +195,10 @@ public:
             int col;
             cout << "Please input the row and column: " << endl;
             cin >> row >> col;
+            // Special case for reverting a move
+            if (row == -1 and col == -1){
+                return {-1,-1};
+            }
             row--;
             col--;
             if (row >= 0 && row < nRows_ && col >= 0 && col < nCols_ && board_[row][col] == '.'){
@@ -179,9 +210,10 @@ public:
 
 private:
     vector<vector<char>> board_;
-    vector<Player> players_;
     const int nRows_;
     const int nCols_;
+    vector<Player> players_;
+    vector<pair<int, int>> history_;
 };
 
 int main(){
