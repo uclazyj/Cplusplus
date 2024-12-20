@@ -200,8 +200,15 @@ public:
         while (true){
             int row;
             int col;
-            cout << "Please input the row and column: " << endl;
+            cout << "Please input the row and column (use -1, -1 to undo your previous move): " << endl;
             cin >> row >> col;
+            // User doesn't input an int
+            if (cin.fail()) {
+                cin.clear(); // Clear the error flag
+                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Discard invalid input
+                cout << "Invalid input. Please enter an integer.\n";
+                continue;
+            }
             // Special case for reverting a move
             if (row == -1 and col == -1){
                 return {-1,-1};
@@ -225,8 +232,8 @@ private:
 
 int main(){
     // Ideally comes from user input
-    int nRows = 13;
-    int nCols = 13;
+    int nRows = 15;
+    int nCols = 15;
 
     string name1;
     cout << "Player1, please enter your name: ";
