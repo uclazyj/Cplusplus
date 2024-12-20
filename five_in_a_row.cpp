@@ -29,16 +29,23 @@ public:
 
     void print_board(){
         cout << endl;
-        cout << "  ";
+        cout << "   ";
         for (int j = 0; j < nCols_; ++j){
-            cout << j+1 << " ";
+            cout << j+1 << "  ";
+            if (j+1 < 10){
+                cout << " ";
+            }
         }
         cout << endl;
         for (int i = 0; i < nRows_; ++i){
             cout << i+1 << " ";
-            for (int j = 0; j < nCols_; ++j){
-                cout << board_[i][j] << " ";
+            if (i+1 < 10){
+                cout << " ";
             }
+            for (int j = 0; j < nCols_; ++j){
+                cout << board_[i][j] << "   ";
+            }
+            cout << endl;
             cout << endl;
         }
         cout << endl;
@@ -218,11 +225,18 @@ private:
 
 int main(){
     // Ideally comes from user input
-    int nRows = 9;
-    int nCols = 9;
-    string name1 = "Alice";
+    int nRows = 13;
+    int nCols = 13;
+
+    string name1;
+    cout << "Player1, please enter your name: ";
+    getline(cin, name1);
+
+    string name2;
+    cout << "Player2, please enter your name: ";
+    getline(cin, name2);
+
     char token1 = 'X';
-    string name2 = "Bob";
     char token2 = 'O';
     Game game = Game(nRows, nCols, name1, token1, name2, token2);
     game.print_board();
