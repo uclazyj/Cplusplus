@@ -4,31 +4,28 @@
 
 using namespace std;
 
-class A
-{
+class B {
+public:
+    B(){cout << "Constructor B\n";}
+    ~B(){cout << "Destructor B\n";}
+};
+
+class C {
+public:
+    C(){cout << "Constructor C\n";}
+    ~C(){cout << "Destructor C\n";}
+};
+
+class A {
 public:
     A() {cout << "Constructor A\n";}
     ~A() {cout << "Destructor A\n";}
+private:
+    B b;
+    C c;
 };
 
-class B: public A
-{
-public:
-    B() {cout << "Constructor B\n";}
-    ~B() {cout << "Destructor B\n";}
-};
 
 int main() {
-    // Write C++ code here
-    // B b;
-    // std::cout << "=====" << std::endl;
-    A* p = new B;
-    B* q = new B;
-    std::cout << "=====" << std::endl;
-    delete p;
-    std::cout << "=====" << std::endl;
-    delete q;
-    // std::cout << "=====" << std::endl;
-    // delete p;
-    // std::cout << "=====" << std::endl;
+    A a = A();
 }
