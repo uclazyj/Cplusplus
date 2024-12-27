@@ -8,9 +8,9 @@
 #include <iostream>
 
 template<typename T>
-class vector{
+class Vector{
 public:
-    vector():capacity_(1),size_(0){
+    Vector():capacity_(1),size_(0){
         data_ = new T[capacity_];
     }
     
@@ -21,9 +21,34 @@ public:
         data_[size_] = element;
         size_++;
     }
+    
+    void pop_back(){
+        if (size_ > 0){
+            size_--;
+        }
+    }
+    
+    unsigned int size() const {
+        return size_;
+    }
+    
+    
+    void print() const {
+        if (size_ == 0){
+            std::cout << "[]" << std::endl;
+            return;
+        }
+        std::cout << "[" << data_[0];
+        for (int i = 1; i < size_; ++i){
+            
+            std::cout << "," << data_[i];
+        }
+        std::cout << "]" << std::endl;
+    }
 
 private:
     void resize(int capacity){
+        std::cout << "capacity is resized to " << capacity << "!" << std::endl;
         T* data_new = new T[capacity];
         for (unsigned int i = 0; i < size_; ++i){
             data_new[i] = data_[i];
@@ -40,8 +65,12 @@ private:
 };
 
 int main(int argc, const char * argv[]) {
-    vector<int> v;
+    Vector<int> v;
     for (int i = 0; i < 10; ++i){
         v.push_back(i);
     }
+    v.pop_back();
+    v.pop_back();
+    std::cout << "Size: " << v.size() << std::endl;
+    v.print();
 }
