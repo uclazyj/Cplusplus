@@ -1,2 +1,8 @@
 a.out
 *.json
+*.pbxproj
+*.xcworkspacedata
+*.plist
+*.xcuserstate
+*.DS_Store
+
