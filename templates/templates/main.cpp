@@ -13,11 +13,13 @@
 class Point{
 public:
     Point(int x, int y):x_(x),y_(y){}
+    
     // Copy constructor
     Point (const Point& other){
         x_ = other.x_;
         y_ = other.y_;
     }
+    
     // assignment operator
     Point& operator=(const Point& other){
         if (&other == this){
@@ -28,7 +30,7 @@ public:
         return *this;
     }
     
-    int getX() const {return x_;}
+    int getX() const;
     int getY() const {return y_;}
     
 private:
@@ -36,30 +38,41 @@ private:
     int y_;
 };
 
+// Example of a class method defined outside of a regular class
+int Point::getX() const {return x_;}
+
 template <typename T>
 class Stack{
 public:
-    void push(T element){
-        data_.push_back(element);
-    }
+    void push(T element);
+    
     T pop(){
         int size = data_.size();
         T res = data_[size-1];
         data_.pop_back();
         return res;
     }
+    
     T top(){
         return data_[data_.size()-1];
     }
+    
     unsigned int size(){
         return data_.size();
     }
+    
     bool empty(){
         return data_.size() == 0;
     }
+    
 private:
     std::vector<T> data_;
 };
+
+// Example of a class method defined outside of a generic class
+template <typename T> void Stack<T>::push(T element){
+    data_.push_back(element);
+}
 
 int main(int argc, const char * argv[]) {
     // The generic swap function works the same as the std::swap
