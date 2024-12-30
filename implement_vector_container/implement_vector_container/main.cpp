@@ -14,6 +14,10 @@ public:
         data_ = new T[capacity_];
     }
     
+    ~Vector(){
+        delete [] data_;
+    }
+    
     void push_back(const T& element){
         if (size_ == capacity_){
             resize(2 * capacity_);
@@ -73,4 +77,9 @@ int main(int argc, const char * argv[]) {
     v.pop_back();
     std::cout << "Size: " << v.size() << std::endl;
     v.print();
+//    {
+//        Vector<int> v2;
+//        v2 = v;
+//    }
+//    v.print();
 }
