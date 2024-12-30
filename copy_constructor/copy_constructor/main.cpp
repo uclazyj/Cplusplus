@@ -16,6 +16,7 @@ public:
     
     // Copy constructor
     Container (const Container& other){
+        cout << "Copy constructor is called! " << endl;
         capacity_ = other.capacity_;
         size_ = other.size_;
         container_ = new int[capacity_];
@@ -24,8 +25,9 @@ public:
         }
     }
     
-    // assignment operator
+    // Copy assignment operator
     Container& operator=(const Container& other){
+        cout << "Copy assignment operator is called! " << endl;
         if (&other == this){
             return *this;
         }
@@ -37,6 +39,36 @@ public:
             container_[i] = other.container_[i];
         }
         // This allows assignment chaining, e.g.: a = b = c
+        return *this;
+    }
+    
+    // Move constructor
+    Container(Container&& other) noexcept
+    {
+        cout << "Move constructor is called!" << endl;
+        capacity_ = other.capacity_;
+        size_ = other.size_;
+        container_ = other.container_;
+        
+        other.container_ = nullptr;
+        other.capacity_ = 0;
+        other.size_ = 0;
+    }
+    
+    // Move assignment operator
+    Container& operator=(Container&& other){
+        cout << "Move assignment operator is called!" << endl;
+        if (&other != this){
+            delete [] container_;
+            
+            capacity_ = other.capacity_;
+            size_ = other.size_;
+            container_ = other.container_;
+            
+            other.container_ = nullptr;
+            other.capacity_ = 0;
+            other.size_ = 0;
+        }
         return *this;
     }
     
@@ -65,8 +97,18 @@ private:
 int main(int argc, const char * argv[]) {
     Container c1 = Container(5);
     c1.add(1);
-    c1 = c1;
-    c1.print();
-    cout << "Finish!" << endl;
+    // Copy constructor is called
+    Container c2 = c1;
+    // Copy assignment operator is called
+    c2 = c1;
+    c2.print();
+    {
+        Container c1_copy = c1;
+        Container c3 = std::move(c1);
+        c3.print();
+        Container c4(10);
+        c4 = std::move(c1_copy);
+        c4.print();
+    }
     return 0;
 }
