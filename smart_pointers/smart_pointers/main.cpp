@@ -9,30 +9,34 @@
 #include <string>
 #include <memory>
 
+using std::cout;
+using std::endl;
+
 class Entity{
 public:
     Entity(){
-        std::cout << "Created Entity!" << std::endl;
+        cout << "Created Entity!" << endl;
     }
     ~Entity(){
-        std::cout << "Destroyed Entity!" << std::endl;
+        cout << "Destroyed Entity!" << endl;
     }
 };
 
 int main(int argc, const char * argv[]) {
     {
-        std::cout << "scope 1:" << std::endl;
+        cout << "scope 1:" << endl;
         // preferred way
         std::unique_ptr<Entity> entity1 = std::make_unique<Entity>();
         // works but not a great way
-        std::unique_ptr<Entity> entity2(new Entity());
+        // std::unique_ptr<Entity> entity2(new Entity());
     }
     {
-        std::cout << "scope 2:" << std::endl;
+        cout << "scope 2:" << endl;
         std::shared_ptr<Entity> entity = std::make_shared<Entity>();
         {
             std::shared_ptr<Entity> entity2 = entity;
         }
         std::cout << "entity2 has been destroyed!" << std::endl;
     }
+    cout << "Program ends!" << endl;
 }
