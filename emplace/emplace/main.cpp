@@ -21,6 +21,12 @@ public:
         cout << "Person copy constructor is called!" << endl;
         name_ = other.name_;
     }
+    // Move constructor
+    Person(Person&& other){
+        cout << "Person move constructor is called!" << endl;
+        name_ = other.name_;
+        other.name_ = "";
+    }
     std::string get_name(){return name_;}
 private:
     std::string name_;
@@ -32,6 +38,7 @@ int main(int argc, const char * argv[]) {
         people.reserve(3);
         cout << "Using push_back:" << endl;
         for (int i = 0; i < 3; ++i){
+            // If we didn't define a move constructor, copy constructor would be used instead.
             people.push_back(Person("Tony"));
         }
     }
