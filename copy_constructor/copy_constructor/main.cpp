@@ -79,6 +79,11 @@ public:
         container_[size_] = number;
         size_++;
     }
+    
+    unsigned int size(){
+        return size_;
+    }
+    
     void print(){
         for (int i = 0; i < size_; ++i){
             cout << container_[i] << " ";
