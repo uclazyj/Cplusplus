@@ -50,4 +50,9 @@ int main(int argc, const char * argv[]) {
     
     std::cout << "print is called: " << std::endl;
     print(first_name + last_name);
+    
+    int &&rr1 = 42;
+    std::cout << rr1 << std::endl;
+    int &&rr2 = std::move(rr1);
+    std::cout << rr2 << std::endl;
 }
