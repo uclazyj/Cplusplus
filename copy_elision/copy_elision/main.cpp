@@ -36,7 +36,6 @@ Person create_person(std::string name){
     return Person(name);
 }
 
-#include <iostream>
 
 int main(int argc, const char * argv[]) {
     // Due to Copy Elision, the copy assignment operator was not called.
