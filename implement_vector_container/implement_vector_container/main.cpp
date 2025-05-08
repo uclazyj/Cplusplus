@@ -7,6 +7,10 @@
 
 #include <iostream>
 
+using std::cout;
+using std::endl;
+using std::cerr;
+
 template<typename T>
 class Vector{
 public:
@@ -36,23 +40,30 @@ public:
         return size_;
     }
     
+    T& operator[](unsigned int index){
+        if (index >= size_){
+            cerr << "Index out of range! " << endl;
+            // Some error handling...
+            return *data_;
+        }
+        return *(data_ + index);
+    }
     
     void print() const {
         if (size_ == 0){
-            std::cout << "[]" << std::endl;
+            cout << "[]" << endl;
             return;
         }
-        std::cout << "[" << data_[0];
+        cout << "[" << data_[0];
         for (int i = 1; i < size_; ++i){
-            
-            std::cout << "," << data_[i];
+            cout << "," << data_[i];
         }
-        std::cout << "]" << std::endl;
+        cout << "]" << endl;
     }
 
 private:
     void resize(int capacity){
-        std::cout << "capacity is resized to " << capacity << "!" << std::endl;
+        cout << "capacity is resized to " << capacity << "!" << endl;
         T* data_new = new T[capacity];
         for (unsigned int i = 0; i < size_; ++i){
             data_new[i] = data_[i];
@@ -75,11 +86,8 @@ int main(int argc, const char * argv[]) {
     }
     v.pop_back();
     v.pop_back();
-    std::cout << "Size: " << v.size() << std::endl;
+    cout << "Size: " << v.size() << endl;
     v.print();
-//    {
-//        Vector<int> v2;
-//        v2 = v;
-//    }
-//    v.print();
+    
+    cout << v[2] << endl;
 }
