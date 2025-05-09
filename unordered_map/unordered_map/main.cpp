@@ -39,4 +39,14 @@ int main(int argc, const char * argv[]) {
         map[{1,4}] = 5;
         map[{2,7}] = 9;
     }
+    {
+        std::unordered_map<int, int> map;
+        map[1] = 10;
+        map[2] = 20;
+        map[3] = 30;
+        // Use structured bindings
+        for (const auto& [key, value] : map){
+            cout << key << ":" << value << endl;
+        }
+    }
 }
