@@ -8,6 +8,7 @@
 #include <iostream>
 #include <cmath>
 #include <string>
+#include <vector>
 
 int main(int argc, const char * argv[]) {
     {
@@ -49,5 +50,15 @@ int main(int argc, const char * argv[]) {
         int num = std::stoi("9");
         std::cout << num << std::endl;
 
+    }
+    std::cout << "==========" << std::endl;
+    {
+        std::vector<int> v = {0,1,2,3,4,5,6};
+        std::vector<int> v2(v.begin()+2, v.begin()+4);
+        
+        for (int num : v2){
+            std::cout << num << " ";
+        }
+        std::cout << std::endl;
     }
 }
