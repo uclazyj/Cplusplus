@@ -5,8 +5,11 @@
 //  Created by Yujian Zhao on 12/25/24.
 //
 #include <iostream>
+#include <vector>
 
 using namespace std;
+
+#define CAPACITY 100
 
 class Container {
 public:
@@ -74,6 +77,7 @@ public:
     
     void add(int number){
         if (size_ == capacity_){
+            cout << "cannot add more elements, reaching capacity!" << endl;
             return;
         }
         container_[size_] = number;
@@ -99,15 +103,38 @@ private:
     unsigned int size_;
 };
 
+Container create_container(const vector<int>& nums) {
+    Container c = Container(CAPACITY);
+    for (int num : nums){
+        c.add(num);
+    }
+    return c;
+}
+
+Container pass_by_value_return_by_value(Container c) {
+    cout << "pass_by_value_return_by_value runs!" << endl;
+    return c;
+}
+
+Container pass_by_reference_return_by_value(Container& c) {
+    cout << "pass_by_reference_return_by_value" << endl;
+    return c;
+}
+
+Container& pass_by_reference_return_by_reference(Container& c) {
+    cout << "pass_by_reference_return_by_reference" << endl;
+    return c;
+}
+
 int main(int argc, const char * argv[]) {
-    Container c1 = Container(5);
-    c1.add(1);
-    // Copy constructor is called
-    Container c2 = c1;
-    // Copy assignment operator is called
-    c2 = c1;
-    c2.print();
     {
+        Container c1 = Container(5);
+        c1.add(1);
+        // Copy constructor is called
+        Container c2 = c1;
+        // Copy assignment operator is called
+        c2 = c1;
+        c2.print();
         Container c1_copy = c1;
         Container c3 = std::move(c1);
         c3.print();
@@ -115,5 +142,28 @@ int main(int argc, const char * argv[]) {
         c4 = std::move(c1_copy);
         c4.print();
     }
+    cout << "==========" << endl;
+    {
+        vector<int> v = {1,2,3,4,5};
+        Container c1 = create_container(v);
+        
+        cout << "----------" << endl;
+        // Copy constructor is called when c1 is passed into the function by value
+        // Move constructor (or copy constructor, if the move constructor is not defined) is called when the function returns.
+        Container c2 = pass_by_value_return_by_value(c1);
+        
+        cout << "----------" << endl;
+        Container c3 = pass_by_reference_return_by_value(c1);
+        c3.add(100);
+        c3.print();
+        c1.print();
+        
+        cout << "----------" << endl;
+        Container& c4 = pass_by_reference_return_by_reference(c1);
+        c4.add(100);
+        c4.print();
+        c1.print();
+    }
+    
     return 0;
 }
