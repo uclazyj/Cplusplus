@@ -88,7 +88,7 @@ public:
         return size_;
     }
     
-    void print(){
+    void print() const {
         for (int i = 0; i < size_; ++i){
             cout << container_[i] << " ";
         }
@@ -117,12 +117,17 @@ Container pass_by_value_return_by_value(Container c) {
 }
 
 Container pass_by_reference_return_by_value(Container& c) {
-    cout << "pass_by_reference_return_by_value" << endl;
+    cout << "pass_by_reference_return_by_value runs!" << endl;
     return c;
 }
 
 Container& pass_by_reference_return_by_reference(Container& c) {
-    cout << "pass_by_reference_return_by_reference" << endl;
+    cout << "pass_by_reference_return_by_reference runs!" << endl;
+    return c;
+}
+
+const Container& pass_by_reference_return_by_const_reference(Container& c) {
+    cout << "pass_by_reference_return_by_const_reference runs!" << endl;
     return c;
 }
 
@@ -163,6 +168,12 @@ int main(int argc, const char * argv[]) {
         c4.add(100);
         c4.print();
         c1.print();
+        
+        cout << "----------" << endl;
+        const Container& c5 = pass_by_reference_return_by_const_reference(c1);
+        c5.print();
+        // illegal
+        // c5.add(100);
     }
     
     return 0;
