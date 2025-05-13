@@ -31,7 +31,7 @@ int main(int argc, const char * argv[]) {
         void (*fp1)(const std::string&) = print;
         fp1("Hello1");
         // Equivalent assignment: address-of operator is optional
-        void (*fp2)(const std::string&) = print;
+        void (*fp2)(const std::string&) = &print;
         fp2("Hello2");
         
         auto fp3 = print;
