@@ -41,4 +41,42 @@ int main(int argc, const char * argv[]) {
         v3.insert(v3.end(), v2.begin(), v2.end());
         print(v3);
     }
+    std::cout << "==========" << std::endl;
+    {
+        // 2D vector
+        vector<vector<int>> vec(3, vector<int>(4));
+        cout << vec.size() << endl;
+        cout << vec[0].size() << endl;
+        cout << vec[1][2] << endl;
+    }
+    std::cout << "==========" << std::endl;
+    {
+        // delete an element
+        vector<int> v = {1, 2, 3, 4, 5, 6};
+
+        auto it = v.erase(v.begin()+2);
+        cout << *it << endl;
+    }
+    std::cout << "==========" << std::endl;
+    {
+        // custom sort
+        vector<pair<int, int>> v = {{1,10},{2,6},{1,100},{3,9}};
+        sort(v.begin(), v.end(), [](pair<int, int> a, pair<int, int> b){return a.first + a.second > b.first + b.second;});
+        for (const auto& pair : v){
+            cout << "(" << pair.first << "," << pair.second << ")" << endl;
+        }
+        
+        // sort again, using functor
+        struct Comparator {
+            bool operator()(pair<int, int> a, pair<int,int> b) const {
+                return a.first + a.second < b.first + b.second;
+            }
+        };
+        std::cout << "----------" << std::endl;
+        sort(v.begin(), v.end(), Comparator());
+        for (const auto& pair : v){
+            cout << "(" << pair.first << "," << pair.second << ")" << endl;
+        }
+        
+    }
 }
