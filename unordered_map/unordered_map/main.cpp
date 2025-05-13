@@ -48,5 +48,7 @@ int main(int argc, const char * argv[]) {
         for (const auto& [key, value] : map){
             cout << key << ":" << value << endl;
         }
+        // Removing a non-existing key does not crash the program.
+        map.erase(4);
     }
 }
